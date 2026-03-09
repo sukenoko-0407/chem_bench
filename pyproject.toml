@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ChemMultiBench"
+version = "0.1.0"
+description = "Benchmark package for small-molecule property prediction with classical ML models."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+  { name = "ChemMultiBench Maintainers" }
+]
+dependencies = [
+  "numpy>=1.24,<2",
+  "pandas>=2.0",
+  "scipy>=1.10",
+  "scikit-learn>=1.3",
+  "rdkit>=2023.3",
+  "mordred>=1.2.0",
+  "xgboost>=2.0",
+  "lightgbm>=4.0",
+  "optuna>=3.0",
+  "joblib>=1.3",
+]
+
+[project.scripts]
+chemmultibench = "ChemMultiBench.cli:main"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["ChemMultiBench*"]
+
+[tool.setuptools.package-data]
+ChemMultiBench = ["config/*.json"]

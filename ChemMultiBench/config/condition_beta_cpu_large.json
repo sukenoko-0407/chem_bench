@@ -1,0 +1,103 @@
+{
+  "seed": 42,
+  "cv_splits": 5,
+  "feature_options": {
+    "atom_pair_nbits": 2048,
+    "mordred_use_3d": false
+  },
+  "save": {
+    "prefer_pickle": true
+  },
+  "algorithms": {
+    "ridge": {
+      "enabled": true,
+      "use_gpu": false,
+      "params": {
+        "alpha": 0.5
+      }
+    },
+    "elastic_net": {
+      "enabled": true,
+      "use_gpu": false,
+      "params": {
+        "max_iter": 15000,
+        "l1_ratio": 0.2,
+        "alpha": 0.005
+      }
+    },
+    "svr": {
+      "enabled": false,
+      "use_gpu": false,
+      "params": {
+        "epsilon": 0.02,
+        "C": 80.0,
+        "gamma": "auto",
+        "kernel": "rbf"
+      }
+    },
+    "knn": {
+      "enabled": false,
+      "use_gpu": false,
+      "params": {
+        "n_neighbors": 7,
+        "weights": "distance",
+        "p": 2
+      }
+    },
+    "xgboost": {
+      "enabled": true,
+      "use_gpu": false,
+      "params": {
+        "max_depth": 12,
+        "n_estimators": 3500,
+        "min_child_weight": 1,
+        "learning_rate": 0.015,
+        "subsample": 0.95,
+        "reg_lambda": 1.0,
+        "reg_alpha": 0.0,
+        "colsample_bytree": 0.95
+      }
+    },
+    "lightgbm": {
+      "enabled": true,
+      "use_gpu": false,
+      "params": {
+        "n_estimators": 4000,
+        "learning_rate": 0.01,
+        "colsample_bytree": 0.95,
+        "reg_alpha": 0.0,
+        "subsample": 0.95,
+        "num_leaves": 511,
+        "reg_lambda": 1.0,
+        "max_depth": -1,
+        "min_child_samples": 30
+      }
+    },
+    "gpr": {
+      "enabled": false,
+      "use_gpu": false,
+      "params": {
+        "alpha": 1E-10,
+        "normalize_y": true
+      }
+    },
+    "mlp": {
+      "enabled": true,
+      "use_gpu": false,
+      "params": {
+        "max_iter": 700,
+        "hidden_layer_sizes": [
+          768,
+          384
+        ],
+        "learning_rate_init": 0.0005,
+        "alpha": 1E-06,
+        "early_stopping": true,
+        "solver": "adam",
+        "activation": "relu",
+        "batch_size": 512,
+        "n_iter_no_change": 40
+      }
+    }
+  }
+}

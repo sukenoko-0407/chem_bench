@@ -1,0 +1,6 @@
+{
+  "objective": "mse",
+  "n_trials": 20,
+  "timeout_seconds": null
+}
+
