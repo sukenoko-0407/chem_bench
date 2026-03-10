@@ -17,7 +17,8 @@ from .registry import normalize_algorithm
 
 def _with_scaler(model, pca_reduction: int | None = None) -> Pipeline:
     steps: list[tuple[str, Any]] = [
-        ("imputer", SimpleImputer(strategy="median")),
+        # Keep all-NaN columns and impute them to 0 to avoid fold-wise feature drops.
+        ("imputer", SimpleImputer(strategy="median", keep_empty_features=True)),
         ("scaler", StandardScaler()),
     ]
     if pca_reduction is not None:
@@ -27,7 +28,9 @@ def _with_scaler(model, pca_reduction: int | None = None) -> Pipeline:
 
 
 def _without_scaler(model, pca_reduction: int | None = None) -> Pipeline:
-    steps: list[tuple[str, Any]] = [("imputer", SimpleImputer(strategy="median"))]
+    steps: list[tuple[str, Any]] = [
+        ("imputer", SimpleImputer(strategy="median", keep_empty_features=True))
+    ]
     if pca_reduction is not None:
         steps.append(("pca", PCA(n_components=pca_reduction, random_state=0)))
     steps.append(("model", model))
