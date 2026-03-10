@@ -1,4 +1,4 @@
-from ChemMultiBench import fit
+from ChemBench import fit
 
 
 if __name__ == "__main__":

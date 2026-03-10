@@ -1,6 +1,6 @@
 import pytest
 
-from ChemMultiBench.data.validation import validate_smiles
+from ChemBench.data.validation import validate_smiles
 
 
 def test_validate_smiles_ok():

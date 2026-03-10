@@ -1,4 +1,4 @@
-from ChemMultiBench import predict
+from ChemBench import predict
 
 
 if __name__ == "__main__":

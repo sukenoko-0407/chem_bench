@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 
 
-def get_logger(name: str = "ChemMultiBench") -> logging.Logger:
+def get_logger(name: str = "ChemBench") -> logging.Logger:
     logger = logging.getLogger(name)
     if logger.handlers:
         return logger

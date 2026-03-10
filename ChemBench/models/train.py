@@ -53,7 +53,7 @@ def fit_models(
     tuning: bool = False,
     tuning_config_path: Path | None = None,
 ) -> dict[str, Any]:
-    logger = get_logger("ChemMultiBench.fit")
+    logger = get_logger("ChemBench.fit")
     config = load_merged_config(_default_config_path(), config_path)
     tuning_config = load_merged_config(_default_tuning_config_path(), tuning_config_path)
 

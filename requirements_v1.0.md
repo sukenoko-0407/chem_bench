@@ -1,7 +1,7 @@
-# ChemMultiBench 要件定義書 v1.0
+# ChemBench 要件定義書 v1.0
 
 ## 1. 目的
-- Pythonパッケージ `ChemMultiBench` を構築する。
+- Pythonパッケージ `ChemBench` を構築する。
 - 低分子化合物のProperty予測（回帰）を、複数のClassicalアルゴリズムで一括実行できるようにする。
 
 ## 2. スコープ
@@ -134,17 +134,17 @@
 - アンサンブル出力（平均・重み付き平均）
 
 ## 15. ディレクトリ構成・ファイル構成（Current Dir直下に構築）
-- 本パッケージは `ChemMultiBench` のCurrent Dir直下に構築する。
+- 本パッケージは `ChemBench` のCurrent Dir直下に構築する。
 - v1.0時点の標準構成（案）は以下とする。
 
 ```text
-ChemMultiBench/
+ChemBench/
   requirements_v1.0.md
   README.md
   pyproject.toml
   environment.yml
   .gitignore
-  ChemMultiBench/
+  ChemBench/
     __init__.py
     cli.py
     config/
@@ -187,15 +187,15 @@ ChemMultiBench/
 ### 15.1 主要ファイルの責務
 - `pyproject.toml`: パッケージ定義、依存関係、ビルド設定。
 - `environment.yml`: conda-forge限定の実行環境定義（必要に応じてpip依存を追記）。
-- `ChemMultiBench/cli.py`: `fit` / `predict` のCLIエントリポイント。
-- `ChemMultiBench/config/default_config.json`: デフォルト学習条件（各アルゴリズム、seed、CV、保存形式）。
-- `ChemMultiBench/config/tuning_config.json`: Optuna利用時の探索設定（MSE最小化、trial数など）。
-- `ChemMultiBench/data/validation.py`: SMILES valid/invalid検査（invalid検出時に停止）。
-- `ChemMultiBench/features/`: ECFP/MACCS/AtomPair/Mordred生成と特徴量結合。
-- `ChemMultiBench/models/builders.py`: 各回帰器（Ridge/ElasticNet/SVR/k-NN/XGBoost/LightGBM/GPR/MLP）のインスタンス生成。
-- `ChemMultiBench/models/train.py`: 5-fold CV学習、OOF作成、評価指標算出、成果物保存。
-- `ChemMultiBench/models/predict.py`: 学習済みモデルの自動検出と一括予測。
-- `ChemMultiBench/models/save_load.py`: pickle優先、joblib代替の保存・読込処理。
-- `ChemMultiBench/models/tuning.py`: Optunaによるハイパーパラメータ探索。
-- `ChemMultiBench/metrics/regression.py`: Pearson/Spearman/R2/MAE/RMSEの計算。
+- `ChemBench/cli.py`: `fit` / `predict` のCLIエントリポイント。
+- `ChemBench/config/default_config.json`: デフォルト学習条件（各アルゴリズム、seed、CV、保存形式）。
+- `ChemBench/config/tuning_config.json`: Optuna利用時の探索設定（MSE最小化、trial数など）。
+- `ChemBench/data/validation.py`: SMILES valid/invalid検査（invalid検出時に停止）。
+- `ChemBench/features/`: ECFP/MACCS/AtomPair/Mordred生成と特徴量結合。
+- `ChemBench/models/builders.py`: 各回帰器（Ridge/ElasticNet/SVR/k-NN/XGBoost/LightGBM/GPR/MLP）のインスタンス生成。
+- `ChemBench/models/train.py`: 5-fold CV学習、OOF作成、評価指標算出、成果物保存。
+- `ChemBench/models/predict.py`: 学習済みモデルの自動検出と一括予測。
+- `ChemBench/models/save_load.py`: pickle優先、joblib代替の保存・読込処理。
+- `ChemBench/models/tuning.py`: Optunaによるハイパーパラメータ探索。
+- `ChemBench/metrics/regression.py`: Pearson/Spearman/R2/MAE/RMSEの計算。
 - `tests/`: 前処理、特徴量生成、学習・予測フローの単体/結合テスト。

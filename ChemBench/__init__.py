@@ -1,4 +1,4 @@
-"""ChemMultiBench public API."""
+"""ChemBench public API."""
 
 from .api import fit, predict
 

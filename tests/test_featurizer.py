@@ -1,4 +1,4 @@
-from ChemMultiBench.features.featurizer import featurize_smiles
+from ChemBench.features.featurizer import featurize_smiles
 
 
 def test_ecfp_shape():

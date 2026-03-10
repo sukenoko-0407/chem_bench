@@ -27,7 +27,7 @@ def predict_from_dir(
     output_csv: Path | None = None,
     algorithms: list[str] | None = None,
 ):
-    logger = get_logger("ChemMultiBench.predict")
+    logger = get_logger("ChemBench.predict")
     logger.info("Loading input CSV: %s", input_csv)
     df = read_csv(input_csv)
     validate_columns(df.columns.tolist(), [smiles_col])

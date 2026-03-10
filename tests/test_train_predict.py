@@ -1,6 +1,6 @@
 import pandas as pd
 
-from ChemMultiBench import fit, predict
+from ChemBench import fit, predict
 
 
 def test_train_and_predict(tmp_path):

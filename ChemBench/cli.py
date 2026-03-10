@@ -13,7 +13,7 @@ def _split_algorithms(text: str | None) -> list[str] | None:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="chemmultibench")
+    parser = argparse.ArgumentParser(prog="chembench")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     fit_parser = subparsers.add_parser("fit")
