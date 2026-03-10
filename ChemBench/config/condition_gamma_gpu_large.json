@@ -1,10 +1,6 @@
 {
   "seed": 42,
   "cv_splits": 5,
-  "feature_options": {
-    "atom_pair_nbits": 2048,
-    "mordred_use_3d": false
-  },
   "save": {
     "prefer_pickle": true
   },

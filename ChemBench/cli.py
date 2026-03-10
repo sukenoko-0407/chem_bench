@@ -26,6 +26,19 @@ def build_parser() -> argparse.ArgumentParser:
     fit_parser.add_argument("--config-path", default=None)
     fit_parser.add_argument("--tuning", action="store_true")
     fit_parser.add_argument("--tuning-config-path", default=None)
+    fit_parser.add_argument(
+        "--pca-reduction",
+        "--pca_reduction",
+        dest="pca_reduction",
+        type=int,
+        default=None,
+    )
+    fit_parser.add_argument(
+        "--mordred-3d",
+        "--mordred_use_3d",
+        dest="mordred_use_3d",
+        action="store_true",
+    )
 
     pred_parser = subparsers.add_parser("predict")
     pred_parser.add_argument("--input-csv", required=True)
@@ -50,6 +63,8 @@ def main() -> None:
             config_path=args.config_path,
             tuning=args.tuning,
             tuning_config_path=args.tuning_config_path,
+            pca_reduction=args.pca_reduction,
+            mordred_use_3d=args.mordred_use_3d,
         )
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return
@@ -66,4 +81,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

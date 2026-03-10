@@ -7,6 +7,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.linear_model import ElasticNet, Ridge
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.neural_network import MLPRegressor
+from sklearn.decomposition import PCA
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVR
@@ -14,18 +15,23 @@ from sklearn.svm import SVR
 from .registry import normalize_algorithm
 
 
-def _with_scaler(model) -> Pipeline:
-    return Pipeline(
-        [
-            ("imputer", SimpleImputer(strategy="median")),
-            ("scaler", StandardScaler()),
-            ("model", model),
-        ]
-    )
+def _with_scaler(model, pca_reduction: int | None = None) -> Pipeline:
+    steps: list[tuple[str, Any]] = [
+        ("imputer", SimpleImputer(strategy="median")),
+        ("scaler", StandardScaler()),
+    ]
+    if pca_reduction is not None:
+        steps.append(("pca", PCA(n_components=pca_reduction, random_state=0)))
+    steps.append(("model", model))
+    return Pipeline(steps)
 
 
-def _without_scaler(model) -> Pipeline:
-    return Pipeline([("imputer", SimpleImputer(strategy="median")), ("model", model)])
+def _without_scaler(model, pca_reduction: int | None = None) -> Pipeline:
+    steps: list[tuple[str, Any]] = [("imputer", SimpleImputer(strategy="median"))]
+    if pca_reduction is not None:
+        steps.append(("pca", PCA(n_components=pca_reduction, random_state=0)))
+    steps.append(("model", model))
+    return Pipeline(steps)
 
 
 def build_regressor(
@@ -33,26 +39,36 @@ def build_regressor(
     params: dict[str, Any],
     random_state: int,
     use_gpu: bool = False,
+    pca_reduction: int | None = None,
 ):
     algo = normalize_algorithm(algorithm)
 
     if algo == "ridge":
-        return _with_scaler(Ridge(random_state=random_state, **params))
+        return _with_scaler(
+            Ridge(random_state=random_state, **params), pca_reduction=pca_reduction
+        )
 
     if algo == "elastic_net":
-        return _with_scaler(ElasticNet(random_state=random_state, **params))
+        return _with_scaler(
+            ElasticNet(random_state=random_state, **params), pca_reduction=pca_reduction
+        )
 
     if algo == "svr":
-        return _with_scaler(SVR(**params))
+        return _with_scaler(SVR(**params), pca_reduction=pca_reduction)
 
     if algo == "knn":
-        return _with_scaler(KNeighborsRegressor(**params))
+        return _with_scaler(KNeighborsRegressor(**params), pca_reduction=pca_reduction)
 
     if algo == "gpr":
-        return _with_scaler(GaussianProcessRegressor(random_state=random_state, **params))
+        return _with_scaler(
+            GaussianProcessRegressor(random_state=random_state, **params),
+            pca_reduction=pca_reduction,
+        )
 
     if algo == "mlp":
-        return _with_scaler(MLPRegressor(random_state=random_state, **params))
+        return _with_scaler(
+            MLPRegressor(random_state=random_state, **params), pca_reduction=pca_reduction
+        )
 
     if algo == "xgboost":
         from xgboost import XGBRegressor
@@ -62,7 +78,7 @@ def build_regressor(
         merged.setdefault("random_state", random_state)
         merged.setdefault("tree_method", "hist")
         merged["device"] = "cuda" if use_gpu else "cpu"
-        return _without_scaler(XGBRegressor(**merged))
+        return _without_scaler(XGBRegressor(**merged), pca_reduction=pca_reduction)
 
     if algo == "lightgbm":
         from lightgbm import LGBMRegressor
@@ -72,7 +88,6 @@ def build_regressor(
         merged.setdefault("objective", "regression")
         merged.setdefault("verbosity", -1)
         merged["device_type"] = "gpu" if use_gpu else "cpu"
-        return _without_scaler(LGBMRegressor(**merged))
+        return _without_scaler(LGBMRegressor(**merged), pca_reduction=pca_reduction)
 
     raise ValueError(f"Unsupported algorithm: {algorithm}")
-

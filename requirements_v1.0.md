@@ -36,10 +36,8 @@
 
 1. ECFP4（1024 bit）
 2. ECFP4（2048 bit）
-3. その他Fingerprint（`MACCS + AtomPair`）
+3. Mordred
 4. 2 と 3 の結合特徴量
-5. Mordred
-6. 2 と 5 の結合特徴量
 
 ### 5.1 Mordredの推奨仕様（本書での決定）
 - 方針: 「基本的に限定しない」要望に合わせ、広範囲の記述子を扱う。
@@ -191,7 +189,7 @@ ChemBench/
 - `ChemBench/config/default_config.json`: デフォルト学習条件（各アルゴリズム、seed、CV、保存形式）。
 - `ChemBench/config/tuning_config.json`: Optuna利用時の探索設定（MSE最小化、trial数など）。
 - `ChemBench/data/validation.py`: SMILES valid/invalid検査（invalid検出時に停止）。
-- `ChemBench/features/`: ECFP/MACCS/AtomPair/Mordred生成と特徴量結合。
+- `ChemBench/features/`: ECFP/Mordred生成と特徴量結合。
 - `ChemBench/models/builders.py`: 各回帰器（Ridge/ElasticNet/SVR/k-NN/XGBoost/LightGBM/GPR/MLP）のインスタンス生成。
 - `ChemBench/models/train.py`: 5-fold CV学習、OOF作成、評価指標算出、成果物保存。
 - `ChemBench/models/predict.py`: 学習済みモデルの自動検出と一括予測。

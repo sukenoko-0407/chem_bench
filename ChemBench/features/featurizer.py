@@ -4,14 +4,11 @@ import numpy as np
 
 from .combine import concat_features
 from .ecfp import ecfp4
-from .fingerprint import maccs_atompair
 from .mordred_desc import mordred_features
 
 FEATURE_SETS = {
     "ecfp4_1024",
     "ecfp4_2048",
-    "maccs_atompair",
-    "ecfp4_2048_plus_maccs_atompair",
     "mordred",
     "ecfp4_2048_plus_mordred",
 }
@@ -20,7 +17,6 @@ FEATURE_SETS = {
 def featurize_smiles(
     smiles_list: list[str],
     feature_set: str,
-    atom_pair_nbits: int = 2048,
     mordred_use_3d: bool = False,
     random_seed: int = 42,
 ) -> np.ndarray:
@@ -33,13 +29,6 @@ def featurize_smiles(
         return ecfp4(smiles_list, n_bits=1024)
     if feature_set == "ecfp4_2048":
         return ecfp4(smiles_list, n_bits=2048)
-    if feature_set == "maccs_atompair":
-        return maccs_atompair(smiles_list, atom_pair_nbits=atom_pair_nbits)
-    if feature_set == "ecfp4_2048_plus_maccs_atompair":
-        return concat_features(
-            ecfp4(smiles_list, n_bits=2048),
-            maccs_atompair(smiles_list, atom_pair_nbits=atom_pair_nbits),
-        )
     if feature_set == "mordred":
         return mordred_features(
             smiles_list, use_3d=mordred_use_3d, random_seed=random_seed

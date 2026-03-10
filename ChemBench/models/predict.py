@@ -54,7 +54,6 @@ def predict_from_dir(
         feature_options = meta.get("feature_options", {})
         cache_key = (
             feature_set,
-            int(feature_options.get("atom_pair_nbits", 2048)),
             bool(feature_options.get("mordred_use_3d", False)),
         )
 
@@ -63,8 +62,7 @@ def predict_from_dir(
             feat_cache[cache_key] = featurize_smiles(
                 smiles_list=smiles,
                 feature_set=feature_set,
-                atom_pair_nbits=cache_key[1],
-                mordred_use_3d=cache_key[2],
+                mordred_use_3d=cache_key[1],
                 random_seed=int(meta.get("seed", 42)),
             )
         X = feat_cache[cache_key]

@@ -17,6 +17,8 @@ def fit(
     config_path: str | None = None,
     tuning: bool = False,
     tuning_config_path: str | None = None,
+    pca_reduction: int | None = None,
+    mordred_use_3d: bool = False,
 ) -> dict[str, Any]:
     """Train one or multiple algorithms and save artifacts."""
     return fit_models(
@@ -29,6 +31,8 @@ def fit(
         config_path=Path(config_path) if config_path else None,
         tuning=tuning,
         tuning_config_path=Path(tuning_config_path) if tuning_config_path else None,
+        pca_reduction=pca_reduction,
+        mordred_use_3d=mordred_use_3d,
     )
 
 
@@ -47,4 +51,3 @@ def predict(
         output_csv=Path(output_csv) if output_csv else None,
         algorithms=algorithms,
     )
-
