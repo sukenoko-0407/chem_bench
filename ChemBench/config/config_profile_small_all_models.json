@@ -21,6 +21,17 @@
         "max_iter": 10000
       }
     },
+    "random_forest": {
+      "enabled": true,
+      "use_gpu": false,
+      "params": {
+        "n_estimators": 600,
+        "max_depth": 20,
+        "min_samples_split": 2,
+        "min_samples_leaf": 1,
+        "max_features": "sqrt"
+      }
+    },
     "svr": {
       "enabled": true,
       "use_gpu": false,
@@ -82,7 +93,7 @@
         ],
         "activation": "relu",
         "solver": "adam",
-        "alpha": 1e-04,
+        "alpha": 0.0001,
         "learning_rate_init": 0.001,
         "batch_size": 128,
         "max_iter": 400,
@@ -92,4 +103,3 @@
     }
   }
 }
-

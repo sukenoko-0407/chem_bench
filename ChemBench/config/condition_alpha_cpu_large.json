@@ -21,6 +21,17 @@
         "alpha": 0.02
       }
     },
+    "random_forest": {
+      "enabled": false,
+      "use_gpu": false,
+      "params": {
+        "n_estimators": 600,
+        "max_depth": 20,
+        "min_samples_split": 2,
+        "min_samples_leaf": 1,
+        "max_features": "sqrt"
+      }
+    },
     "svr": {
       "enabled": false,
       "use_gpu": false,
@@ -73,7 +84,7 @@
       "enabled": false,
       "use_gpu": false,
       "params": {
-        "alpha": 1E-08,
+        "alpha": 1e-08,
         "normalize_y": true
       }
     },
@@ -87,7 +98,7 @@
           256
         ],
         "learning_rate_init": 0.0007,
-        "alpha": 1E-05,
+        "alpha": 1e-05,
         "early_stopping": true,
         "solver": "adam",
         "activation": "relu",

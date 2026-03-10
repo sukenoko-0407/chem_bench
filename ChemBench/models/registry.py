@@ -3,6 +3,7 @@ from __future__ import annotations
 ALGORITHMS = [
     "ridge",
     "elastic_net",
+    "random_forest",
     "svr",
     "knn",
     "xgboost",
@@ -15,6 +16,9 @@ ALIASES = {
     "ridge": "ridge",
     "elastic_net": "elastic_net",
     "elasticnet": "elastic_net",
+    "random_forest": "random_forest",
+    "randomforest": "random_forest",
+    "rf": "random_forest",
     "svr": "svr",
     "knn": "knn",
     "k-nn": "knn",
@@ -33,4 +37,3 @@ def normalize_algorithm(name: str) -> str:
     if key not in ALIASES:
         raise ValueError(f"Unsupported algorithm: {name}")
     return ALIASES[key]
-

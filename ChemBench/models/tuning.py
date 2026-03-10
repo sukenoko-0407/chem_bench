@@ -19,6 +19,16 @@ def _suggest_params(trial, algorithm: str) -> dict[str, Any]:
             "alpha": trial.suggest_float("alpha", 1e-4, 1e2, log=True),
             "l1_ratio": trial.suggest_float("l1_ratio", 0.01, 0.99),
         }
+    if algo == "random_forest":
+        return {
+            "n_estimators": trial.suggest_int("n_estimators", 200, 1200),
+            "max_depth": trial.suggest_int("max_depth", 4, 32),
+            "min_samples_split": trial.suggest_int("min_samples_split", 2, 20),
+            "min_samples_leaf": trial.suggest_int("min_samples_leaf", 1, 10),
+            "max_features": trial.suggest_categorical(
+                "max_features", ["sqrt", "log2", 0.3, 0.5, 0.8]
+            ),
+        }
     if algo == "svr":
         return {
             "C": trial.suggest_float("C", 1e-2, 1e3, log=True),
@@ -110,4 +120,3 @@ def tune_hyperparameters(
     if "h1" in best and "h2" in best:
         best["hidden_layer_sizes"] = (best.pop("h1"), best.pop("h2"))
     return best
-

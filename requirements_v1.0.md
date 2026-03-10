@@ -50,6 +50,7 @@
 
 - Ridge Regression
 - Elastic Net
+- Random Forest Regressor
 - SVR
 - k-NN Regressor
 - XGBoost Regressor
@@ -190,7 +191,7 @@ ChemBench/
 - `ChemBench/config/tuning_config.json`: Optuna利用時の探索設定（MSE最小化、trial数など）。
 - `ChemBench/data/validation.py`: SMILES valid/invalid検査（invalid検出時に停止）。
 - `ChemBench/features/`: ECFP/Mordred生成と特徴量結合。
-- `ChemBench/models/builders.py`: 各回帰器（Ridge/ElasticNet/SVR/k-NN/XGBoost/LightGBM/GPR/MLP）のインスタンス生成。
+- `ChemBench/models/builders.py`: 各回帰器（Ridge/ElasticNet/RandomForest/SVR/k-NN/XGBoost/LightGBM/GPR/MLP）のインスタンス生成。
 - `ChemBench/models/train.py`: 5-fold CV学習、OOF作成、評価指標算出、成果物保存。
 - `ChemBench/models/predict.py`: 学習済みモデルの自動検出と一括予測。
 - `ChemBench/models/save_load.py`: pickle優先、joblib代替の保存・読込処理。

@@ -5,6 +5,7 @@ from typing import Any
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import ElasticNet, Ridge
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.neural_network import MLPRegressor
 from sklearn.decomposition import PCA
@@ -54,6 +55,14 @@ def build_regressor(
     if algo == "elastic_net":
         return _with_scaler(
             ElasticNet(random_state=random_state, **params), pca_reduction=pca_reduction
+        )
+
+    if algo == "random_forest":
+        merged = dict(params)
+        merged.setdefault("random_state", random_state)
+        merged.setdefault("n_jobs", -1)
+        return _without_scaler(
+            RandomForestRegressor(**merged), pca_reduction=pca_reduction
         )
 
     if algo == "svr":
