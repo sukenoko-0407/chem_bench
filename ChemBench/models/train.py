@@ -62,6 +62,7 @@ def fit_models(
     config_path: Path | None = None,
     tuning: bool = False,
     tuning_config_path: Path | None = None,
+    use_gpu: bool | None = None,
     pca_reduction: int | None = None,
     mordred_use_3d: bool = False,
 ) -> dict[str, Any]:
@@ -137,7 +138,8 @@ def fit_models(
 
         algo_cfg = config.get("algorithms", {}).get(algorithm, {})
         base_params = dict(algo_cfg.get("params", {}))
-        use_gpu = bool(algo_cfg.get("use_gpu", False))
+        config_use_gpu = bool(algo_cfg.get("use_gpu", False))
+        algo_use_gpu = config_use_gpu if use_gpu is None else bool(use_gpu)
         final_params = dict(base_params)
 
         if tuning:
@@ -151,7 +153,7 @@ def fit_models(
                 n_trials=int(tuning_config.get("n_trials", 20)),
                 timeout=tuning_config.get("timeout_seconds"),
                 cv_splits=cv_splits,
-                use_gpu=use_gpu,
+                use_gpu=algo_use_gpu,
             )
 
         oof_pred = np.zeros(len(df), dtype=np.float64)
@@ -161,7 +163,7 @@ def fit_models(
                 algorithm=algorithm,
                 params=final_params,
                 random_state=seed,
-                use_gpu=use_gpu,
+                use_gpu=algo_use_gpu,
                 pca_reduction=pca_reduction,
             )
             model.fit(X[train_idx], y[train_idx])
@@ -188,7 +190,7 @@ def fit_models(
             algorithm=algorithm,
             params=final_params,
             random_state=seed,
-            use_gpu=use_gpu,
+            use_gpu=algo_use_gpu,
             pca_reduction=pca_reduction,
         )
         final_model.fit(X, y)
@@ -215,7 +217,7 @@ def fit_models(
             "pca_captured_variance": final_pca_variance,
             "model_format": save_format,
             "params": final_params,
-            "use_gpu": use_gpu,
+            "use_gpu": algo_use_gpu,
             "seed": seed,
             "cv_splits": cv_splits,
         }
@@ -225,7 +227,7 @@ def fit_models(
         run_summary["algorithms"][algorithm] = {
             "metrics": metrics,
             "params": final_params,
-            "use_gpu": use_gpu,
+            "use_gpu": algo_use_gpu,
             "model_format": save_format,
             "pca_captured_variance": final_pca_variance,
         }

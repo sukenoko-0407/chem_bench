@@ -27,6 +27,13 @@ def build_parser() -> argparse.ArgumentParser:
     fit_parser.add_argument("--tuning", action="store_true")
     fit_parser.add_argument("--tuning-config-path", default=None)
     fit_parser.add_argument(
+        "--use-gpu",
+        dest="use_gpu",
+        action=argparse.BooleanOptionalAction,
+        default=None,
+        help="Override GPU usage for xgboost/lightgbm.",
+    )
+    fit_parser.add_argument(
         "--pca-reduction",
         "--pca_reduction",
         dest="pca_reduction",
@@ -63,6 +70,7 @@ def main() -> None:
             config_path=args.config_path,
             tuning=args.tuning,
             tuning_config_path=args.tuning_config_path,
+            use_gpu=args.use_gpu,
             pca_reduction=args.pca_reduction,
             mordred_use_3d=args.mordred_use_3d,
         )

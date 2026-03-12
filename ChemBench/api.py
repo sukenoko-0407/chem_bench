@@ -17,6 +17,7 @@ def fit(
     config_path: str | None = None,
     tuning: bool = False,
     tuning_config_path: str | None = None,
+    use_gpu: bool | None = None,
     pca_reduction: int | None = None,
     mordred_use_3d: bool = False,
 ) -> dict[str, Any]:
@@ -31,6 +32,7 @@ def fit(
         config_path=Path(config_path) if config_path else None,
         tuning=tuning,
         tuning_config_path=Path(tuning_config_path) if tuning_config_path else None,
+        use_gpu=use_gpu,
         pca_reduction=pca_reduction,
         mordred_use_3d=mordred_use_3d,
     )

@@ -41,6 +41,7 @@ pip install -e .
 | `--config-path` | 任意 | なし | 学習設定JSON（`default_config.json`への上書き） | `path/to/my_config.json` |
 | `--tuning` | 任意 | `false` | 付与するとOptunaチューニングを有効化 | `--tuning` |
 | `--tuning-config-path` | 任意 | なし | チューニング設定JSON（試行回数など） | `path/to/my_tuning_config.json` |
+| `--use-gpu` / `--no-use-gpu` | 任意 | なし | XGBoost/LightGBMのGPU利用をコマンド引数で上書き指定 | `--use-gpu` |
 
 ### 記述子選択一覧（`--feature-set`）
 | 値 | 概要 | 特徴量次元（目安） | 関連引数 |
@@ -64,7 +65,7 @@ pip install -e .
 
 基本構文:
 ```bash
-chembench fit --train-csv <PATH> --output-dir <DIR> --smiles-col <COL> --label-col <COL> [--feature-set <NAME>] [--mordred_use_3d] [--pca_reduction <N>] [--algorithms <CSV>] [--config-path <PATH>] [--tuning] [--tuning-config-path <PATH>]
+chembench fit --train-csv <PATH> --output-dir <DIR> --smiles-col <COL> --label-col <COL> [--feature-set <NAME>] [--mordred_use_3d] [--pca_reduction <N>] [--algorithms <CSV>] [--config-path <PATH>] [--tuning] [--tuning-config-path <PATH>] [--use-gpu | --no-use-gpu]
 ```
 
 ### 3.1 最小実行
@@ -96,7 +97,20 @@ chembench fit \
 #### カスタム設定で学習する場合
 * `default_config.json` をベースに上書き JSON を作り、`--config-path` で指定してください
 
-例: GPUを使う（XGBoost, LightGBM）
+例: GPUを使う（XGBoost, LightGBM, コマンド引数で指定）
+```bash
+chembench fit \
+  --train-csv examples/sample_train.csv \
+  --output-dir artifacts/run_gpu \
+  --smiles-col SMILES \
+  --label-col Label \
+  --algorithms xgboost,lightgbm \
+  --use-gpu
+```
+
+`--use-gpu` / `--no-use-gpu` を指定した場合、configファイル内の `use_gpu` よりコマンド引数の指定が優先されます。
+
+参考: configファイルで指定する場合
 ```json
 {
   "algorithms": {
@@ -267,6 +281,7 @@ fit(
     label_col="Label",
     feature_set="mordred",
     algorithms=["ridge", "random_forest", "mlp"],
+    use_gpu=True,
 )
 
 pred_df = predict(
